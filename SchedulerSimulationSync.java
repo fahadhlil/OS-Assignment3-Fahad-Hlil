@@ -200,6 +200,7 @@ class SharedResources {
         }
 
         public void runToCompletion() {
+            SharedResources.cpuSemaphore.acquire();
             // TODO: Similar synchronization needed here
             try {
                 System.out.println(Colors.BRIGHT_CYAN + "  ⚡ " + Colors.BOLD + Colors.CYAN + name +
@@ -218,6 +219,9 @@ class SharedResources {
                 System.out.println();
             } catch (InterruptedException e) {
                 System.out.println(Colors.RED + "  ✗ " + name + " was interrupted." + Colors.RESET);
+
+            } finally {
+                SharedResources.cpuSemaphore.release();
             }
         }
 
